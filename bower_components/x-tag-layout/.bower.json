@@ -1,0 +1,30 @@
+{
+  "name": "x-tag-layout",
+  "description": "A simple layout element that automatically stretches to fill the parent, with optional toggleable header and footer elements.",
+  "version": "0.1.9",
+  "keywords": [
+    "web-components",
+    "element",
+    "x-tag"
+  ],
+  "main": [
+    "src/layout.js",
+    "src/layout.css",
+    "src/layout.styl"
+  ],
+  "dependencies": {
+    "x-tag-core": "*",
+    "brick-common": "*"
+  },
+  "homepage": "https://github.com/x-tag/layout",
+  "_release": "0.1.9",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.9",
+    "commit": "84c676c88f13c2cedca46a1e19ffce13a4c5034a"
+  },
+  "_source": "git://github.com/x-tag/layout.git",
+  "_target": "~0.1.9",
+  "_originalSource": "x-tag-layout",
+  "_direct": true
+}
