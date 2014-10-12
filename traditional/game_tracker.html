@@ -2,20 +2,27 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Live Hockey!</title>
+    <title>Live Hockey Scores!</title>
     <script src="../bower_components/angular/angular.js"></script>
-    <script src="../scripts/gameController.js"></script>
+    <script src="../bower_components/momentjs/moment.js"></script>
+    <script src="../scripts/gameApp.js"></script>
+    <script src="../scripts/gameServices.js"></script>
+    <script src="../scripts/gameControllers.js"></script>
 </head>
-<body ng-app="gameTrackerApp" ng-controller="gameController">
-    <div>
-        <ul ng-repeat="player in homeTeam">
-            <li>{{player.number}} {{player.name}}</li>
-        </ul>
-    </div>
-    <div>
-        <ul ng-repeat="player in awayTeam">
-            <li>{{player.number}} {{player.name}}</li>
-        </ul>
-    </div>
+<body ng-app="gameApp" ng-controller="gameController">
+    <ul ng-repeat="game in todaysGames">
+        <li>
+            <div>
+                {{game.awayId}} @ {{game.homeId}}
+                <div ng-show="game.status == 'inProgress'">
+                    LIVE
+                </div>
+                <div ng-show="game.status == 'future'">
+                    {{formatTime(game.date, game.time)}}
+                </div>
+            </div>
+        </li>
+    </ul>
+{{allGames}}
 </body>
 </html>
