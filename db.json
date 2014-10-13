@@ -1,18 +1,47 @@
 {
-    "orders":[
-        {"id":299202, "totalPrice": 342.09},
-        {"id":835724, "totalPrice": 5284.31},
-        {"id":365824, "totalPrice": 91.47},
-        {"id":155243, "totalPrice": 31.81}
-    ],
-    "cart":[
+  "orders": [
+    {
+      "id": 299202,
+      "totalPrice": 342.09
+    },
+    {
+      "id": 835724,
+      "totalPrice": 5284.31
+    },
+    {
+      "id": 365824,
+      "totalPrice": 91.47
+    },
+    {
+      "id": 155243,
+      "totalPrice": 31.81
+    }
+  ],
+  "cart": [
+    {
+      "id": 1,
+      "products": [
         {
-            "products": [
-                {"quantity": 2, "item": "Fight Club", "unitPrice": 19.99},
-                {"quantity": 1, "item": "Se7en", "unitPrice": 23.26},
-                {"quantity": 1, "item": "The Social Network", "unitPrice": 21.49},
-                {"quantity": 3, "item": "The Girl with the Dragon Tattoo", "unitPrice": 24.99}
-            ]
+          "quantity": 2,
+          "item": "Fight Club",
+          "unitPrice": 19.99
+        },
+        {
+          "quantity": 1,
+          "item": "Se7en",
+          "unitPrice": 23.26
+        },
+        {
+          "quantity": 1,
+          "item": "The Social Network",
+          "unitPrice": 21.49
+        },
+        {
+          "quantity": 3,
+          "item": "The Girl with the Dragon Tattoo",
+          "unitPrice": 24.99
         }
-    ]
+      ]
+    }
+  ]
 }
