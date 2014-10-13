@@ -25,6 +25,7 @@
     "x-tag-core": "~0.9.9",
     "x-tag-layout": "~0.1.9",
     "angular": "~1.2.26",
-    "momentjs": "~2.8.3"
+    "momentjs": "~2.8.3",
+    "jquery": "1.11.0"
   }
 }

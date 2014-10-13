@@ -1,104 +1,18 @@
 {
-    "teams":[
-        {
-            "id": "COL",
-            "name": "Colorado Avalanche",
-            "players":[
-                {"number": 1, "name": "S. Varlamov", "position": "G"},
-                {"number": 2, "name": "N. Holden", "position": "D"},
-                {"number": 4, "name": "T. Barrie", "position": "D"},
-                {"number": 5, "name": "N. Guenin", "position": "D"},
-                {"number": 6, "name": "E. Johnson", "position": "D"},
-                {"number": 8, "name": "J. Hedja", "position": "D"},
-                {"number": 9, "name": "M. Duchene", "position": "C"},
-                {"number": 11, "name": "J. McGinn", "position": "L"},
-                {"number": 12, "name": "J. Iginla", "position": "R"},
-                {"number": 17, "name": "B. Stewart", "position": "D"},
-                {"number": 24, "name": "M. Cliche", "position": "C"},
-                {"number": 25, "name": "M. Talbot", "position": "C"},
-                {"number": 29, "name": "N. MacKinnon", "position": "C"},
-                {"number": 40, "name": "A. Tanguay", "position": "L"},
-                {"number": 45, "name": "D. Everberg", "position": "R"},
-                {"number": 48, "name": "D. Briere", "position": "C"},
-                {"number": 55, "name": "C. McLeod", "position": "L"},
-                {"number": 90, "name": "R. O'Reilly", "position": "C"},
-                {"number": 92, "name": "G. Landeskog", "position": "L"}
-            ]
-        },
-        {
-            "id": "DET",
-            "name": "Detroit Red Wings",
-            "players":[
-                {"number": 2, "name": "B. Smith", "position": "D"},
-                {"number": 4, "name": "J. Kindl", "position": "D"},
-                {"number": 8, "name": "J. Abdelkader", "position": "L"},
-                {"number": 14, "name": "G. Nyquist", "position": "R"},
-                {"number": 15, "name": "R. Sheahan", "position": "C"},
-                {"number": 18, "name": "J. Andersson", "position": "C"},
-                {"number": 20, "name": "D. Miller", "position": "L"},
-                {"number": 21, "name": "T. Tatar", "position": "L"},
-                {"number": 26, "name": "J. Jurco", "position": "R"},
-                {"number": 27, "name": "K. Quincey", "position": "D"},
-                {"number": 35, "name": "J. Howard", "position": "G"},
-                {"number": 40, "name": "H. Zetterberg", "position": "L"},
-                {"number": 41, "name": "L. Glendening", "position": "C"},
-                {"number": 43, "name": "D. Helm", "position": "C"},
-                {"number": 49, "name": "A. Nestrasil", "position": "C"},
-                {"number": 52, "name": "J. Ericsson", "position": "D"},
-                {"number": 55, "name": "N. Kronwall", "position": "D"},
-                {"number": 65, "name": "D. DeKeyser", "position": "D"},
-                {"number": 93, "name": "J. Franzen", "position": "R"}
-            ]
-        },
-        {
-            "id": "CHI",
-            "name": "Chicago Blackhawks",
-            "players":[]
-        },
-        {
-            "id": "PIT",
-            "name": "Pittsburgh Penguins",
-            "players":[]
-        }
+    "orders":[
+        {"id":299202, "totalPrice": 342.09},
+        {"id":835724, "totalPrice": 5284.31},
+        {"id":365824, "totalPrice": 91.47},
+        {"id":155243, "totalPrice": 31.81}
     ],
-    "games":[
+    "cart":[
         {
-            "id": 1,
-            "homeId": "COL",
-            "awayId": "DET",
-            "date": "2014-10-21",
-            "time": "15:00:00",
-            "homeScore": 2,
-            "awayScore": 0,
-            "status": "inProgress",
-            "plays":[
-                {"type": "shot", "period": "1", "time": "0:25", "shooter": "COL-9", "goalie": "DET-35"},
-                {"type": "shot", "period": "1", "time": "1:47", "shooter": "COL-4", "goalie": "DET-35"},
-                {"type": "shot", "period": "1", "time": "2:13", "shooter": "DET-21", "goalie": "COL-1"},
-                {"type": "shot", "period": "1", "time": "3:11", "shooter": "DET-2", "goalie": "COL-1"},
-                {"type": "shot", "period": "1", "time": "3:13", "shooter": "DET-55", "goalie": "COL-1"},
-                {"type": "shot", "period": "1", "time": "5:48", "shooter": "COL-11", "goalie": "DET-35"},
-                {"type": "shot", "period": "1", "time": "9:33", "shooter": "DET-40", "goalie": "COL-1"},
-                {"type": "shot", "period": "1", "time": "14:59", "shooter": "COL-92", "goalie": "DET-35"},
-                {"type": "goal", "period": "1", "time": "15:13", "shooter": "COL-8", "pass1": "COL-6", "goalie": "DET-35"},
-                {"type": "shot", "period": "1", "time": "16:48", "shooter": "COL-92", "goalie": "DET-35"},
-                {"type": "shot", "period": "1", "time": "18:07", "shooter": "DET-20", "goalie": "COL-1"},
-                {"type": "shot", "period": "1", "time": "19:58", "shooter": "DET-15", "goalie": "COL-1"},
-                {"type": "shot", "period": "2", "time": "0:47", "shooter": "COL-6", "goalie": "DET-35"},
-                {"type": "shot", "period": "2", "time": "2:15",  "shooter": "COL-12", "goalie": "DET-35"},
-                {"type": "goal", "period": "2", "time": "3:06",  "shooter": "COL-29", "pass1": "COL-9", "pass2": "COL-4", "goalie": "DET-35"}
+            "products": [
+                {"quantity": 2, "item": "Fight Club", "unitPrice": 19.99},
+                {"quantity": 1, "item": "Se7en", "unitPrice": 23.26},
+                {"quantity": 1, "item": "The Social Network", "unitPrice": 21.49},
+                {"quantity": 3, "item": "The Girl with the Dragon Tattoo", "unitPrice": 24.99}
             ]
-        },
-        {
-            "id": 2,
-            "homeId": "CHI",
-            "awayId": "PIT",
-            "date": "2014-10-21",
-            "time": "19:00:00",
-            "homeScore": 0,
-            "awayScore": 0,
-            "status": "future",
-            "plays":[]
         }
     ]
 }
