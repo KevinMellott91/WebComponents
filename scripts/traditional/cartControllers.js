@@ -19,7 +19,7 @@ angular.module('cartApp.Controllers', ['angular-underscore'])
         $scope.submit = function(){
             cartService.createOrder({
                 id: $scope.random(1, 999999),
-                totalPrice: $scope.totalPrice
+                totalPrice: $scope.totalCartPrice()
             }, function(){
                 console.log('order created...');
                 $scope.initializeCart();
@@ -34,16 +34,45 @@ angular.module('cartApp.Controllers', ['angular-underscore'])
             });
         };
 
+        // Add quantity to a cart item
+        $scope.addQuantity = function(product, additionalQuantity){
+            product.quantity += additionalQuantity;
+        };
+
+        // Decrease the quantity of a cart item, if it is not already at zero
+        $scope.subtractQuantity = function(product, decreasedQuantity){
+            if(product.quantity - decreasedQuantity <= 0){
+                product.quantity = 0;
+            }
+            else{
+                product.quantity -= decreasedQuantity;
+            }
+        };
+
+        // Updates the state of the cart, and notifies the other controllers of the change
+        $scope.updateCart = function(){
+            cartService.updateCart($scope.cart, function(){
+                console.log('cart updated...');
+                $scope.initializeCart();
+            });
+        };
+
+        // Calculates the total price of all lines in the cart
+        $scope.totalCartPrice = function(){
+            if($scope.cart === undefined){
+                return 0;
+            }
+
+            var totalPrice = 0;
+            $scope.each($scope.cart.products, function (product) {
+                totalPrice += (product.unitPrice * product.quantity);
+            });
+            return totalPrice;
+        };
+
         $scope.initializeCart = function() {
             cartService.getCart(function (cartData) {
                 $scope.cart = cartData;
-                $scope.products = cartData.products;
-
-                // Calculate the total price of the basket.
-                $scope.totalPrice = 0;
-                $scope.each($scope.products, function (product) {
-                    $scope.totalPrice += (product.unitPrice * product.quantity);
-                });
 
                 // Let the other controller know of the cart
                 console.log('publishing cart...');

@@ -2,11 +2,12 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Angular Cart</title>
+    <title>Angular Cart w/ Broadcasted Messages</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="../css/custom.css"/>
+    <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css">
 </head>
 <body ng-app="cartApp">
     <nav class="navbar" ng-controller="navigationController">
@@ -38,8 +39,8 @@
 
         <div class="col-md-7 col-sm-12 text-left" ng-controller="cartController">
             <div ng-show="cart.products.length === 0">
-                <h3>Your cart is empty</h3>
-                <p><button ng-click="reload()">Reload</button></p>
+                <h3 style="margin-bottom: 25px">Your cart is empty</h3>
+                <div class="order"><a class="text-center" ng-click="reload()">Reload</a></div>
             </div>
             <div ng-show="cart.products.length > 0">
                 <ul>
@@ -49,14 +50,25 @@
                         <span>Price</span>
                     </li>
                     <li class="row" ng-repeat="product in cart.products">
-                        <span class="quantity">{{product.quantity}}</span>
+                        <span class="quantity">
+                            <table>
+                                <tr>
+                                    <td rowspan="2">
+                                        {{product.quantity}}
+                                    </td>
+                                    <td><a href="#" title="Increase Quantity" ng-click="addQuantity(product, 1)"><i class="fa fa-plus cart-line"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#" title="Decrease Quantity" ng-click="subtractQuantity(product, 1)"><i class="fa fa-minus cart-line"></i></a></td>
+                                </tr>
+                            </table>
+                        </span>
                         <span class="itemName">{{product.item}}</span>
-                        <span class="popbtn"><a class="arrow"></a></span>
-                        <span class="price">{{product.unitPrice | currency}}</span>
+                        <span class="price">{{(product.unitPrice * product.quantity) | currency}}</span>
                     </li>
                     <li class="row totals">
                         <span class="itemName">Total:</span>
-                        <span class="price">{{totalPrice | currency}}</span>
+                        <span class="price">{{totalCartPrice() | currency}}</span>
                         <span class="order"> <a class="text-center" ng-click="submit()">ORDER</a></span>
                     </li>
                 </ul>
@@ -64,21 +76,14 @@
         </div>
     </div>
 
-    <!-- The popover content -->
-    <div id="popover" style="display: none">
-        <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
-        <a href="#"><span class="glyphicon glyphicon-remove"></span></a>
-    </div>
-
     <!-- JavaScript includes -->
     <script src="../bower_components/jquery/dist/jquery.js"></script>
     <script src="../bower_components/underscore/underscore.js"></script>
     <script src="../scripts/bootstrap.min.js"></script>
-    <script src="../scripts/customjs.js"></script>
     <script src="../bower_components/angular/angular.js"></script>
     <script src="../bower_components/angular-underscore/angular-underscore.js"></script>
-    <script src="../scripts/cartApp.js"></script>
-    <script src="../scripts/cartServices.js"></script>
-    <script src="../scripts/cartControllers.js"></script>
+    <script src="../scripts/traditional/cartApp.js"></script>
+    <script src="../scripts/traditional/cartServices.js"></script>
+    <script src="../scripts/traditional/cartControllers.js"></script>
 </body>
 </html>
