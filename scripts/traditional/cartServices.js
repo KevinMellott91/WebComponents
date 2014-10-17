@@ -21,7 +21,7 @@ angular.module('cartApp.Services', []).
             createOrder: function(order, successCallback){
                 $http.post('http://localhost:3000/orders', order).
                     success(function(){
-                        $http.post('http://localhost:3000/cart', {
+                        $http.put('http://localhost:3000/cart/1', {
                             "id": 1,
                             "products":[]
                         }).success(function(){
@@ -30,7 +30,7 @@ angular.module('cartApp.Services', []).
                     });
             },
             reloadCart: function(successCallback){
-                $http.post('http://localhost:3000/cart', {
+                $http.put('http://localhost:3000/cart/1', {
                     "id": 1,
                     "products": [
                         {

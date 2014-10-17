@@ -1,21 +1,5 @@
 {
   "orders": [
-    {
-      "id": 397006,
-      "totalPrice": 206.22
-    },
-    {
-      "id": 763023,
-      "totalPrice": 163.2
-    },
-    {
-      "id": 507868,
-      "totalPrice": 159.7
-    },
-    {
-      "id": 102020,
-      "totalPrice": 159.7
-    }
   ],
   "cart": [
     {
