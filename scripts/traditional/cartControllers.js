@@ -3,6 +3,19 @@ angular.module('cartApp.Controllers', ['angular-underscore'])
         $scope.$on('cart', function(event, data){
             console.log('...navigation received cart');
             $scope.itemsInCart = data.products.length;
+
+            // Calculates the total price of all lines in the cart
+            $scope.totalCartPrice = function(){
+                if(data.products === undefined){
+                    return 0;
+                }
+
+                var totalPrice = 0;
+                $scope.each(data.products, function (product) {
+                    totalPrice += (product.unitPrice * product.quantity);
+                });
+                return totalPrice;
+            };
         });
     }])
     .controller('summaryController', ['$scope', 'cartService', function($scope, cartService){
@@ -37,6 +50,10 @@ angular.module('cartApp.Controllers', ['angular-underscore'])
         // Add quantity to a cart item
         $scope.addQuantity = function(product, additionalQuantity){
             product.quantity += additionalQuantity;
+
+            // Let the other controller know of the cart
+            console.log('publishing cart quantity increase...');
+            $rootScope.$broadcast('cart', $scope.cart);
         };
 
         // Decrease the quantity of a cart item, if it is not already at zero
@@ -47,6 +64,10 @@ angular.module('cartApp.Controllers', ['angular-underscore'])
             else{
                 product.quantity -= decreasedQuantity;
             }
+
+            // Let the other controller know of the cart
+            console.log('publishing cart quantity decrease...');
+            $rootScope.$broadcast('cart', $scope.cart);
         };
 
         // Updates the state of the cart, and notifies the other controllers of the change
