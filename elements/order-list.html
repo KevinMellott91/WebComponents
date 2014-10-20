@@ -1,0 +1,62 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-signals/core-signals.html">
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+<polymer-element name="order-list">
+    <template>
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/custom.css"/>
+        <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css">
+        <style>
+            ul, p{
+                width: 200px;
+            }
+        </style>
+
+        <div class="col-md-5 col-sm-12">
+            <div class="bigcart"></div>
+            <h1>Recent Orders</h1>
+            <div class="col-md-5 col-sm-12 text-left">
+                <template if="{{orders.length === 0}}">
+                    <p>No orders exist</p>
+                </template>
+                <template if="{{orders.length > 0}}">
+                    <ul>
+                        <li class="row list-inline columnCaptions order-history">
+                            <span>ORDER</span>
+                            <span>Price</span>
+                        </li>
+                        <template repeat="{{order in orders}}">
+                            <li class="row order-history">
+                                <span class="quantity">{{order.id}}</span>
+                                <span class="price">{{formatAmount(order.totalPrice)}}</span>
+                            </li>
+                        </template>
+                    </ul>
+                </template>
+            </div>
+        </div>
+        <core-signals on-core-signal-order-created="{{receiveOrder}}"></core-signals>
+        <core-signals on-core-signal-orders-retrieved="{{receiveOrders}}"></core-signals>
+    </template>
+    <script>
+        Polymer('order-list', {
+            created: function(){
+                var self = this;
+                self.orders = [];
+
+                self.receiveOrder = function(e, detail, sender){
+                    self.orders.push(detail);
+                };
+
+                self.receiveOrders = function(e, detail, sender){
+                    self.orders = detail;
+                };
+
+                self.formatAmount = function(amount){
+                    return accounting.formatMoney(amount);
+                };
+            }
+        });
+    </script>
+</polymer-element>

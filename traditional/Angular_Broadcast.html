@@ -14,7 +14,7 @@
         <div class="container">
             <a class="navbar-brand" href="#">Online Movie Store</a>
             <div class="navbar-right">
-                <div class="container minicart"><p>{{itemsInCart}} items, {{totalCartPrice() | currency}}</p></div>
+                <div class="container minicart"><p>{{linesInCart}} lines, {{totalCartPrice() | currency}}</p></div>
             </div>
         </div>
     </nav>
@@ -24,7 +24,8 @@
             <div class="bigcart"></div>
             <h1>Recent Orders</h1>
             <div class="col-md-5 col-sm-12 text-left">
-                <ul>
+                <p ng-show="orders.length === 0">No orders exist</p>
+                <ul ng-show="orders.length > 0">
                     <li class="row list-inline columnCaptions order-history">
                         <span>ORDER</span>
                         <span>Price</span>

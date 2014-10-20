@@ -1,8 +1,7 @@
 angular.module('cartApp.Controllers', ['angular-underscore'])
     .controller('navigationController', ['$scope', function($scope){
         $scope.$on('cart', function(event, data){
-            console.log('...navigation received cart');
-            $scope.itemsInCart = data.products.length;
+            $scope.linesInCart = data.products.length;
 
             // Calculates the total price of all lines in the cart
             $scope.totalCartPrice = function(){
@@ -19,10 +18,8 @@ angular.module('cartApp.Controllers', ['angular-underscore'])
         });
     }])
     .controller('summaryController', ['$scope', 'cartService', function($scope, cartService){
-        $scope.$on('cart', function(){
-            console.log('...summary received cart');
-            cartService.getOrders(function(orderData){
-                console.log('loading orders...');
+        $scope.$on('cart', function(event, data){
+            cartService.getOrders(function (orderData) {
                 $scope.orders = orderData;
             });
         });
@@ -34,7 +31,6 @@ angular.module('cartApp.Controllers', ['angular-underscore'])
                 id: $scope.random(1, 999999),
                 totalPrice: $scope.totalCartPrice()
             }, function(){
-                console.log('order created...');
                 $scope.initializeCart();
             });
         };
@@ -42,7 +38,6 @@ angular.module('cartApp.Controllers', ['angular-underscore'])
         // Provides a simple way to get data back into the cart
         $scope.reload = function(){
             cartService.reloadCart(function(){
-                console.log('cart reloaded...');
                 $scope.initializeCart();
             });
         };
@@ -52,7 +47,6 @@ angular.module('cartApp.Controllers', ['angular-underscore'])
             product.quantity += additionalQuantity;
 
             // Let the other controller know of the cart
-            console.log('publishing cart quantity increase...');
             $rootScope.$broadcast('cart', $scope.cart);
         };
 
@@ -66,14 +60,12 @@ angular.module('cartApp.Controllers', ['angular-underscore'])
             }
 
             // Let the other controller know of the cart
-            console.log('publishing cart quantity decrease...');
             $rootScope.$broadcast('cart', $scope.cart);
         };
 
         // Updates the state of the cart, and notifies the other controllers of the change
         $scope.updateCart = function(){
             cartService.updateCart($scope.cart, function(){
-                console.log('cart updated...');
                 $scope.initializeCart();
             });
         };
@@ -96,7 +88,6 @@ angular.module('cartApp.Controllers', ['angular-underscore'])
                 $scope.cart = cartData;
 
                 // Let the other controller know of the cart
-                console.log('publishing cart...');
                 $rootScope.$broadcast('cart', cartData);
             });
         };

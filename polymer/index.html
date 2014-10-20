@@ -4,42 +4,85 @@
     <script src="../bower_components/platform/platform.js"></script>
 
     <link rel="import" href="../bower_components/core-toolbar/core-toolbar.html">
-    <link rel="import" href="../bower_components/core-menu/core-menu.html">
-    <link rel="import" href="../bower_components/core-item/core-item.html">
     <link rel="import" href="../bower_components/core-header-panel/core-header-panel.html">
-    <link rel="import" href="../bower_components/core-drawer-panel/core-drawer-panel.html">
-    <link rel="import" href="../bower_components/core-scaffold/core-scaffold.html">
+    <link rel="import" href="../bower_components/core-icons/core-icons.html">
+    <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+    <link rel="import" href="../bower_components/core-ajax/core-ajax.html">
+    <link rel="import" href="../elements/order-list.html">
+    <link rel="import" href="../elements/cart-summary.html">
+    <link rel="import" href="../elements/cart-details.html">
+
+    <script>
+        document.addEventListener('polymer-ready', function(){
+            var cartAjax = document.querySelector('#cartAjax');
+            var ordersAjax = document.querySelector('#ordersAjax');
+
+            cartAjax.addEventListener('core-response', function(data){
+                var cartResponse = data.detail.response;
+                if(cartResponse.length === 1){
+                    this.fire('core-signal', {name: 'cart-changed', data: cartResponse[0]});
+                }
+            });
+
+            ordersAjax.addEventListener('core-response', function(data){
+                var ordersResponse = data.detail.response;
+                if(ordersResponse.length > 0){
+                    this.fire('core-signal', {name: 'orders-retrieved', data: ordersResponse});
+                }
+            });
+        });
+    </script>
 
     <style>
         body {
             font-family: sans-serif;
         }
-        #navheader {
-            background-color: #56BA89;
+        core-header-panel {
+            background-color: #f2f6f9;
         }
-        .content {
-            padding: 20px;
+        core-toolbar {
+            background-color: #4ea6bc;
+            color: #fff;
+        }
+        order-list{
+            margin-left: 100px;
+            width:400px;
+            margin-top: 20px;
+            float:left;
+        }
+        cart-details{
+            margin-top: 20px;
+            float:left;
+        }
+        .toolbar-cart{
+            font-size: medium;
+            padding-right:100px;
+        }
+        .toolbar-title{
+            padding-left: 100px;
         }
     </style>
 </head>
-<body>
-<core-scaffold>
-
-    <core-header-panel navigation flex>
-        <core-toolbar id="navheader">
-            <span>Menu</span>
+<body fullbleed vertical layout unresolved>
+    <core-header-panel flex>
+        <core-toolbar>
+            <span class="toolbar-title" flex>Online Movie Store</span>
+            <core-icon icon="shopping-cart"></core-icon>
+            <cart-summary class="toolbar-cart"></cart-summary>
         </core-toolbar>
-        <core-menu>
-            <core-item label="One"></core-item>
-            <core-item label="Two"></core-item>
-        </core-menu>
+        <order-list></order-list>
+        <cart-details></cart-details>
     </core-header-panel>
-
-    <span tool>Title</span>
-
-    <div class="content">
-        If drawer is hidden, press button to display drawer.
-    </div>
-</core-scaffold>
+    <core-ajax
+            id="cartAjax"
+            auto
+            url="http://localhost:3000/cart"
+            params='{"id":"1"}'
+            handleAs="json"></core-ajax>
+    <core-ajax
+            id="ordersAjax"
+            auto
+            url="http://localhost:3000/orders"
+            handleAs="json"></core-ajax>
 </body>
 </html>

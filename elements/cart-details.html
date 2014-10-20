@@ -1,0 +1,173 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-signals/core-signals.html">
+
+<script src="../bower_components/underscore/underscore-min.js"></script>
+<script src="../bower_components/accountingjs/accounting.min.js"></script>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+<polymer-element name="cart-details" attributes="cart">
+    <template>
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/custom.css"/>
+        <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css">
+        <style>
+            ul{
+                width: 500px;
+            }
+            a:hover{
+                cursor: pointer;
+            }
+        </style>
+
+        <template if="{{cart.products.length === 0}}">
+            <h3 style="margin-bottom: 25px">Your cart is empty</h3>
+            <div class="order"><a class="text-center" on-click="{{ reload }}">Reload</a></div></a>
+        </template>
+        <template if="{{cart.products.length > 0}}">
+            <ul>
+                <li class="row list-inline columnCaptions">
+                    <span>QTY</span>
+                    <span>ITEM</span>
+                    <span>Price</span>
+                </li>
+                <template repeat="{{product in cart.products}}">
+                    <li class="row">
+                        <span class="quantity">
+                            <table>
+                                <tbody><tr>
+                                    <td rowspan="2">
+                                        {{product.quantity}}
+                                    </td>
+                                    <td><a title="Increase Quantity" data-product-item="{{product.item}}" on-click="{{ addQuantity }}"><i class="fa fa-plus cart-line"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td><a title="Decrease Quantity" data-product-item="{{product.item}}" on-click="{{ removeQuantity }}"><i class="fa fa-minus cart-line"></i></a></td>
+                                </tr>
+                                </tbody></table>
+                        </span>
+                        <span class="itemName">{{product.item}}</span>
+                        <span class="price">{{formatMoney(product.unitPrice * product.quantity)}}</span>
+                    </li>
+                </template>
+                <li class="row totals">
+                    <span class="itemName">Total:</span>
+                    <span class="price">{{formatMoney(total)}}</span>
+                    <span class="order"> <a class="text-center" on-click="{{ submit }}">ORDER</a></span>
+                </li>
+            </ul>
+        </template>
+        <core-signals on-core-signal-cart-changed="{{receiveCart}}"></core-signals>
+    </template>
+    <script>
+        Polymer('cart-details', {
+            ready: function(){
+                var self = this;
+
+                self.addQuantity = function(e, detail, sender){
+                    var product = e.target.templateInstance.model.product;
+                    product.quantity += 1;
+                    self.fire('core-signal', {name: 'cart-changed', data: self.cart});
+                };
+
+                self.removeQuantity = function(e, detail, sender){
+                    var product = e.target.templateInstance.model.product;
+                    if(product.quantity > 0) {
+                        product.quantity -= 1;
+                        self.fire('core-signal', {name: 'cart-changed', data: self.cart});
+                    }
+                };
+
+                self.submit = function(){
+                    var order = {
+                        id: _.random(1, 999999),
+                        totalPrice: self.total
+                    };
+
+                    $.post('http://localhost:3000/orders', order).
+                        success(function(){
+                                self.notifyOrderCreated(order);
+                                self.cart = {
+                                    "id": 1,
+                                    "products":[]
+                                };
+                                $.ajax({
+                                    type: 'PUT',
+                                    url: 'http://localhost:3000/cart',
+                                    data: self.cart,
+                                    dataType: "json"
+                                })
+                                    .success(function(){
+                                        self.notifyCartChanged();
+                            });
+                        });
+                };
+
+                self.reload = function(){
+                    self.cart = {
+                        "id": 1,
+                        "products": [
+                            {
+                                "quantity": 2,
+                                "item": "Fight Club",
+                                "unitPrice": 19.99
+                            },
+                            {
+                                "quantity": 1,
+                                "item": "Se7en",
+                                "unitPrice": 23.26
+                            },
+                            {
+                                "quantity": 1,
+                                "item": "The Social Network",
+                                "unitPrice": 21.49
+                            },
+                            {
+                                "quantity": 3,
+                                "item": "The Girl with the Dragon Tattoo",
+                                "unitPrice": 24.99
+                            }
+                        ]};
+                    $.ajax({
+                        type: 'PUT',
+                        url: 'http://localhost:3000/cart',
+                        data: self.cart,
+                        dataType: "json"
+                    }).success(function(){
+                            self.notifyCartChanged();
+                    });
+                };
+
+                self.notifyOrderCreated = function(order) {
+                    self.fire('core-signal', {name: 'order-created', data: order});
+                };
+
+                self.notifyCartChanged = function(){
+                    self.fire('core-signal', {name: 'cart-changed', data: self.cart});
+                };
+
+                self.receiveCart = function(e, detail, sender){
+                    self.cart = detail;
+                    self.total = self.totalAmount(self.cart);
+                };
+            },
+            created: function(){
+                var self = this;
+                self.totalAmount = function(cart){
+                    if(cart === undefined || cart.products === undefined){
+                        return 0;
+                    }
+
+                    var totalPrice = 0;
+                    _.each(cart.products, function (product) {
+                        totalPrice += (product.unitPrice * product.quantity);
+                    });
+                    return totalPrice;
+                };
+
+                self.formatMoney = function(money){
+                    return accounting.formatMoney(money);
+                }
+            }
+        });
+    </script>
+</polymer-element>

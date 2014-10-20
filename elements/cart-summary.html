@@ -1,0 +1,35 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-signals/core-signals.html">
+<script src="../bower_components/underscore/underscore-min.js"></script>
+<script src="../bower_components/accountingjs/accounting.min.js"></script>
+
+<polymer-element name="cart-summary">
+    <template>
+        {{lines}} lines {{total}}
+        <core-signals on-core-signal-cart-changed="{{receiveCart}}"></core-signals>
+    </template>
+    <script>
+        Polymer({
+            created: function(){
+                var self = this;
+
+                self.receiveCart = function(e, detail, sender){
+                    self.lines = detail.products.length;
+                    self.total = self.totalAmount(detail.products);
+                };
+
+                self.totalAmount = function(products){
+                    if(products === undefined){
+                        return accounting.formatMoney(0);
+                    }
+
+                    var totalPrice = 0;
+                    _.each(products, function (product) {
+                        totalPrice += (product.unitPrice * product.quantity);
+                    });
+                    return accounting.formatMoney(totalPrice);
+                };
+            }
+        });
+    </script>
+</polymer-element>
