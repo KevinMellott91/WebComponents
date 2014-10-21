@@ -111,7 +111,7 @@
                                 };
                                 $.ajax({
                                     type: 'PUT',
-                                    url: 'http://localhost:3000/cart',
+                                    url: 'http://localhost:3000/cart/1',
                                     data: self.cart,
                                     dataType: "json"
                                 })
@@ -148,7 +148,7 @@
                         ]};
                     $.ajax({
                         type: 'PUT',
-                        url: 'http://localhost:3000/cart',
+                        url: 'http://localhost:3000/cart/1',
                         data: self.cart,
                         dataType: "json"
                     }).success(function(){
