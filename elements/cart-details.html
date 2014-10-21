@@ -1,5 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/core-signals/core-signals.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
 
 <script src="../bower_components/underscore/underscore-min.js"></script>
 <script src="../bower_components/accountingjs/accounting.min.js"></script>
@@ -16,6 +17,24 @@
             }
             a:hover{
                 cursor: pointer;
+            }
+            core-icon[icon="add"]{
+                font-size: 10px;
+                color:darkgreen;
+                position: absolute;
+                margin-left: 5px;
+                margin-top:5px;
+                height:14px;
+                width:14px;
+            }
+            core-icon[icon="remove"]{
+                font-size: 10px;
+                color:darkred;
+                position: absolute;
+                margin-left: 5px;
+                margin-top:2px;
+                height:14px;
+                width:14px;
             }
         </style>
 
@@ -38,10 +57,10 @@
                                     <td rowspan="2">
                                         {{product.quantity}}
                                     </td>
-                                    <td><a title="Increase Quantity" data-product-item="{{product.item}}" on-click="{{ addQuantity }}"><i class="fa fa-plus cart-line"></i></a></td>
+                                    <td><a title="Increase Quantity" data-product-item="{{product.item}}" on-click="{{ addQuantity }}"><core-icon icon="add"></core-icon></a></td>
                                 </tr>
                                 <tr>
-                                    <td><a title="Decrease Quantity" data-product-item="{{product.item}}" on-click="{{ removeQuantity }}"><i class="fa fa-minus cart-line"></i></a></td>
+                                    <td><a title="Decrease Quantity" data-product-item="{{product.item}}" on-click="{{ removeQuantity }}"><core-icon icon="remove"></core-icon></a></td>
                                 </tr>
                                 </tbody></table>
                         </span>
